@@ -64,7 +64,7 @@ export default function Login() {
 
   return (
     <div className="login-wrapper">
-      <img className="logo" src="src\assets\logo.png"/>
+      <img className="logo" src="../../../src/assets/logo.png" />
 
       <form className="login-form">
         <input type="text" placeholder="아이디(E-mail)" value={id} onChange={handleId}/>

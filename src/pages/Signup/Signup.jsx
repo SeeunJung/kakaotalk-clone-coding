@@ -97,7 +97,7 @@ useEffect(() => {
   return (
     <div className="signup-wrapper">
       <div className="signup-heading">
-        <img className="logo" src="src\assets\logo.png"/>
+        <img className="logo" src="../../../src/assets/logo.png"/>
         <p>회원가입</p>
       </div>
 
