@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Signup.css";
 import { useNavigate } from 'react-router-dom';
+import logo from "../../assets/logo.png"
 
 export default function Signup() {
     //더미 데이터
@@ -82,7 +83,7 @@ useEffect(() => {
 
   const onClickConfirmButton = () => {
     if(id === User.id && password === User.password && phoneNumber === User.phoneNumber){
-      alert(`${id}님 환영합니다! 로그인 페이지로 돌아갑니다.`);
+      alert(`${name}님 환영합니다! 로그인 페이지로 돌아갑니다.`);
       navigate("/");
     }
     else{
@@ -97,7 +98,7 @@ useEffect(() => {
   return (
     <div className="signup-wrapper">
       <div className="signup-heading">
-        <img className="logo" src="../../../src/assets/logo.png"/>
+        <img className="logo" src={logo} alt="KakaoTalk Logo"/>
         <p>회원가입</p>
       </div>
 
