@@ -66,7 +66,7 @@
 .user-info > input{
   background-color: white;
   border: 0.5px solid lightgray;
-  width: 300px;
+  width: 250px;
   padding: 15px;
   box-sizing: border-box;
 }
@@ -81,7 +81,7 @@
 }
 
 .signup-button{
-  width: 300px;
+  width: 400px;
   margin-top: 20px;
   border: none;
   border-radius: 0%;
