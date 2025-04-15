@@ -1,0 +1,92 @@
+.chatlist-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 40vw;
+  height: 120vh;
+  min-width: 500px;
+  top: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.chatlist-header{
+  position: sticky;
+  top: 0;
+  text-align: left;
+  color: black;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #f9e000;
+}
+
+.chatlist-header > h2{
+  padding: 0 20px;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.chatlist-container{
+  width: 100%;
+}
+
+.profile-container{
+  display: flex;
+  position: relative;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 5px;
+  background-color: white;
+  height: 120px;
+  transition: background-color 0.2s;
+}
+
+.profile-container:hover{
+  background-color: rgb(235, 235, 235);
+}
+
+.profile-img{
+  width: 70px;
+  height: 70px;
+  margin: 0 20px;
+}
+
+.profile-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-right: 80px;
+}
+
+.profile-content > h3{
+  color: black;
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+.profile-content > p{
+  color: black;
+  font-size: 14px;
+}
+
+.chatself-button{
+  width: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  border: lightgray solid 0.5px;
+  background-color: white;
+  color: lightgray
+}
+
+.chatself-button:hover{
+  border: none;
+  color: black;
+  background-color: #f9e000;
+  transition: background-color 0.2s;
+}
