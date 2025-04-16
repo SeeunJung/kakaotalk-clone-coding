@@ -12,6 +12,8 @@
   padding: 0;
   overflow-x: hidden;
   overflow-y: scroll;
+
+  color: black;
   background-color: white;
 }
 
