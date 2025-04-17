@@ -5,14 +5,15 @@
   align-items: center;
 
   box-sizing: border-box;
-  width: 40vw;
-  height: 120vh;
+  width: 30vw;
+  height: 100vh;
   min-width: 500px;
   top: 0;
   padding: 0;
   overflow-x: hidden;
   overflow-y: scroll;
 
+  border-radius: 10px;
   color: black;
   background-color: white;
 }
