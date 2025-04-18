@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Signup.css";
 import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo.png"
@@ -12,51 +12,82 @@ export default function Signup() {
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [errorAlert, setErrorAlert] = useState("");
     const navigate = useNavigate();
 
+    //errorAlert 분리, 상태 저장
+    const [idErrorAlert, setIdErrorAlert] = useState("");
+    const [passwordErrorAlert, setPasswordErrorAlert] = useState("");
+    const [confirmedPasswordErrorAlert, setConfirmedPasswordErrorAlert] = useState("");
+    const [phoneNumberErrorAlert, setPhoneNumberErrorAlert] = useState("");
+
   const idRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
-  const passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])([0-9]).{8,15}$/
+  const passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
   const phoneNumberRegEx = /^[0-9]*$/;
 
+  //useEffect 적용
+  //아이디 유효성 검사
   const handleId = (e) => {
     setId(e.target.value);
-    if(id && !idRegEx.test(id))
-      setErrorAlert("아이디는 이메일 형식으로 입력하셔야 합니다.");
-    else
-      setErrorAlert("");   
   };
 
+    useEffect(() => {
+    if(id && !idRegEx.test(id)){
+      setIdErrorAlert("아이디는 이메일 형식으로 입력하셔야 합니다.");
+    }
+    else{
+      setIdErrorAlert("");
+    }
+  }, [id]);
+
+  //비밀번호 유효성 검사
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    if(password && !passwordRegEx.test(password))
-      setErrorAlert("비밀번호를 올바른 형식으로 입력하셔야 합니다.")
-    else
-      setErrorAlert("");
-  }
-
-  const handleConfirmedPassword = (e) => {
-    setConfirmedPassword(e.target.value);
-    if(password !== e.target.value)
-      setErrorAlert("비밀번호가 일치하지 않습니다.")
-    else
-      setErrorAlert("");
   };
 
+  useEffect(() => {
+    if(password && !passwordRegEx.test(password)){
+      setPasswordErrorAlert("비밀번호를 올바른 형식으로 입력하셔야 합니다.");
+    }
+    else{
+      setPasswordErrorAlert("");
+    }
+  }, [password]);
+
+  //비밀번호 확인 유효성 검사
+  const handleConfirmedPassword = (e) => {
+    setConfirmedPassword(e.target.value);
+  };
+
+  useEffect(() => {
+    if(password !== confirmedPassword){
+      setConfirmedPasswordErrorAlert("비밀번호가 일치하지 않습니다.")
+    } 
+    else{
+      setConfirmedPasswordErrorAlert("");
+    }
+  }, [confirmedPassword]);
+
+  //이름 입력
   const handleName = (e) => {
     setName(e.target.value);
   }
 
+  //핸드폰 번호 유효성 검사
   const handlePhoneNumber = (e) => {
     setPhoneNumber(e.target.value);
-    if(!phoneNumberRegEx.test(e.target.value))
-      setErrorAlert("숫자만 입력해주세요.");
-    else
-      setErrorAlert("");
   };
 
+  useEffect(() => {
+    if(!phoneNumberRegEx.test(phoneNumber)){
+      setPhoneNumberErrorAlert("숫자만 입력해주세요.");
+    }
+    else{
+      setPhoneNumberErrorAlert("");
+    } 
+  }, [phoneNumber]);
+
 //Button 비활성화
-const notAllowed = id === "" || password === "" || confirmedPassword === "" || name === "" || phoneNumber === "" || errorAlert;
+const notAllowed = id === "" || password === "" || confirmedPassword === "" || name === "" || phoneNumber === "" || idErrorAlert || passwordErrorAlert || confirmedPasswordErrorAlert || phoneNumberErrorAlert;
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -99,16 +130,19 @@ const notAllowed = id === "" || password === "" || confirmedPassword === "" || n
             <label htmlFor="id">아이디<br/>(E-mail)</label>
             <input id="id" type="text" placeholder="이메일" value={id} onChange={handleId}></input> 
           </div>
-
+          {idErrorAlert && (<span className="error-alert">{idErrorAlert}</span>)}
+          
           <div className="user-info">
             <label htmlFor="password">비밀번호</label>
-            <input id="password" type="password" placeholder="비밀번호" value={password} onChange={handlePassword}></input>
+            <input id="password" type="password" placeholder="비밀번호" value={password} maxLength={15} onChange={handlePassword}></input>
           </div>
+          {passwordErrorAlert && (<span className="error-alert">{passwordErrorAlert}</span>)}
 
           <div className="user-info">
             <label htmlFor="password-confirm">비밀번호 확인</label>
-            <input id="password-confirmed" type="password" placeholder="비밀번호 확인" value={confirmedPassword} onChange={handleConfirmedPassword}></input>
+            <input id="password-confirmed" type="password" placeholder="비밀번호 확인" value={confirmedPassword} maxLength={15} onChange={handleConfirmedPassword}></input>
           </div>
+          {confirmedPasswordErrorAlert && (<span className="error-alert">{confirmedPasswordErrorAlert}</span>)}
 
           <div className="user-info">
             <label htmlFor="username">이름</label>
@@ -117,10 +151,10 @@ const notAllowed = id === "" || password === "" || confirmedPassword === "" || n
 
           <div className="user-info">
             <label htmlFor="phone-number">전화번호</label>
-            <input id="phone-number" type="text" placeholder="전화번호" value={phoneNumber} onChange={handlePhoneNumber}></input> 
+            <input id="phone-number" type="text" placeholder="전화번호" value={phoneNumber} maxLength={11} onChange={handlePhoneNumber}></input> 
           </div>
+          {phoneNumberErrorAlert && (<span className="error-alert">{phoneNumberErrorAlert}</span>)}
         </div>
-        {errorAlert && (<span className="error-alert">{errorAlert}</span>)}
         <button className="signup-button" type="submit" disabled={notAllowed}>회원가입</button>
       </form>
       
