@@ -107,6 +107,12 @@ const notAllowed = id === "" || password === "" || confirmedPassword === "" || n
         }
       );
 
+      const data = await response.json();
+
+      if(!response.ok){
+        throw new Error(data.message || "회원가입에 실패했습니다.")
+      }
+
       alert(`${name}님 환영합니다! 로그인 페이지로 돌아갑니다.`);
       navigate("/")
     }

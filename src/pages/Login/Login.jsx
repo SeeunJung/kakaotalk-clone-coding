@@ -46,7 +46,15 @@ export default function Login() {
       );
 
       const loginData = await response.json();
+      if(!response.ok){
+        throw new Error(loginData.message || alert("로그인에 실패했습니다."));
+      }
+
       const jwtToken = loginData.accessToken;
+      if(!jwtToken){
+        throw new Error("서버로부터 토큰을 받지 못했습니다.");
+      }
+
       localStorage.setItem("userToken", jwtToken);
 
       const userResponse = await fetch(
@@ -59,6 +67,10 @@ export default function Login() {
       );
 
       const userData = await userResponse.json();
+      if(!userResponse.ok){
+        throw new Error(userData.message || alert("사용자 정보를 불러오는 데 실패했습니다."));
+      }
+
       localStorage.setItem("user", JSON.stringify(userData));
 
       alert("로그인 성공");
@@ -66,7 +78,7 @@ export default function Login() {
     }
     catch(err){
       console.log(err);
-      alert("에러가 발생했습니다.")
+      alert("로그인 중 에러가 발생했습니다." + err.message);
     }
   }
 
