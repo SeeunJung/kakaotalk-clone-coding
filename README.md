@@ -1,12 +1,43 @@
-# React + Vite
+# 💬 React 기반 카카오톡 클론코딩
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+*****
 
-Currently, two official plugins are available:
+## 🔐 로그인
+### ✅ 입력
+- **아이디 (이메일)**
+  - 정규식으로 이메일 형식 검사
+  - 이메일 형식이 아닌 경우 오류 알림
+- **비밀번호**
+  - 정규식으로 비밀번호 형식 검사
+  - 올바른 형식이 아닌 경우 오류 알림
+ - **입력값이 하나라도 비어있거나, 형식에 맞지 않으면 로그인 버튼 비활성화**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔐 로그인 과정
+1. 폼 제출 시 `handleLogin` 실행으로 POST 요청 전송
+2. 응답에서 추출한 `accessToken` 로컬 스토리지에 저장
+3. 토큰을 포함한 GET 요청 전송
+4. 사용자 정보 로컬 스토리지에 `user` 키로 저장
+5. 로그인 성공 처리
 
-## Expanding the ESLint configuration
+*****
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📝 회원가입
+### ✅ 입력
+- **아이디 (이메일)**
+  - 정규식으로 이메일 형식 검사
+  - 이메일 형식이 아닌 경우 오류 알림
+- **비밀번호**
+  - 정규식으로 비밀번호 형식 검사
+  - 올바른 형식이 아닌 경우 오류 알림
+- **비밀번호 확인**
+  - 입력되었던 비밀번호와 일치하지 않을 시 오류 알림
+- **이름**
+- **전화번호**
+  - 정규식으로 숫자만 허용
+ - **모든 항목이 올바르게 입력되었을 때만 회원가입 버튼 활성화**
+
+
+### 🔐 회원가입 과정
+1. 폼 제출 시 `handleSignup`으로  POST 요청 전송
+2. 응답 성공 시 알림 띄운 뒤 로그인 페이지로 이동
+
