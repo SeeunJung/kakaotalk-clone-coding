@@ -51,6 +51,7 @@
 
 .profile-container:hover{
   background-color: rgb(235, 235, 235);
+  cursor: pointer;
 }
 
 .profile-img{
