@@ -91,6 +91,6 @@
 .chatself-button:hover{
   border: none;
   color: black;
-  background-color: #f9e000;
+  background-color: #f3db08;
   transition: background-color 0.2s;
 }
