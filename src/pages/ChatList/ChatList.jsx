@@ -29,10 +29,6 @@ export default function ChatList() {
     }
     fetchChatAPI();
   }, [token])
-
-  function handleUserProfile(){
-    navigate("/userprofile")
-  }
   
   return (
     <div className="chatlist-wrapper">
@@ -43,12 +39,12 @@ export default function ChatList() {
       <div className="chatlist-container">
         <div className="my-chatlist">
           <div className="profile-container">
-            <img className="profile-img" src={user.profile_image_url} alt="User Profile Image" onClick={handleUserProfile}/>
+            <img className="profile-img" src={user.profile_image_url} alt="User Profile Image" onClick={() => navigate("/userprofile")}/>
             <div className="profile-content">
               <h3>{user.name}</h3>
               <p>{user.bio || "상태메세지가 없습니다."}</p>
             </div>
-            <button className="chatself-button" onClick={() => navigate("/chatlist/self")}>나와의 채팅</button>
+            <button className="chatself-button" onClick={() => navigate("/chatroom/self")}>나와의 채팅</button>
           </div>
 
           <div className="chatrooms">
