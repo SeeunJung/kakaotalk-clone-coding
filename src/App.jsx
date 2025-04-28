@@ -15,7 +15,7 @@ function App() {
         <Route path = "/signup" element={<Signup />} />
         <Route path = "/chatlist" element={<ChatList />} />
         <Route path = "/userprofile" element={<UserProfile />} />
-        <Route path = "/chatroom" element={<ChatRoom />} />
+        <Route path = "/chatroom/:chatroomId" element={<ChatRoom />} />
       </Routes>
     </BrowserRouter>
   )

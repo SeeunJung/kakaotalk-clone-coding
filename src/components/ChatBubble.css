@@ -1,0 +1,61 @@
+.chatbubble-wrapper-other {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.chatbubble-wrapper-mine {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 10px;
+
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.chatbubble-profile-img{
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.chatbubble-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 60%;
+}
+
+.chatbubble-username {
+  font-size: 12px;
+  color: gray;
+  margin-bottom: 3px;
+}
+
+.chatbubble-content {
+  padding: 0 15px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.chat-content-mine {
+  background-color: #f9e000;
+  color: black;
+  border-radius: 5px;
+}
+
+.chat-content-other {
+  background-color: #ffffff;
+  color: black;
+
+  padding: 10px;
+  border-radius: 5px;
+}

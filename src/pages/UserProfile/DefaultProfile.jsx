@@ -14,7 +14,7 @@ export default function DefaultProfile({user, onEdit}) {
           <p>{user.bio || "상태메세지가 없습니다."}</p>
         </div>
         <div className="userprofile-buttons">
-          <button onClick={() => navigate("/chatroom/self")}>나와의 채팅</button>
+          <button onClick={() => navigate("/chatroom")}>나와의 채팅</button>
           <button onClick={onEdit} >프로필 편집</button>
         </div>
     </div>
