@@ -49,7 +49,7 @@ export default function ChatList() {
 
           <div className="chatrooms">
             {chatlistItem.map((chatroom, index) => (
-              <div className="profile-container" key={index}>
+              <div className="profile-container" key={index} onClick={() => navigate(`/chatroom/${chatroom.id}`)}>
                 <img className="profile-img" src={chatroom.other_user.profile_image_url} alt="Other User Profile Image" />
                 <div className="profile-content">
                   <h3>{chatroom.other_user.name}</h3>
