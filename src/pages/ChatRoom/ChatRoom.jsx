@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./ChatRoom.css"
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatBubble from '../../components/ChatBubble';
+import ChatSelector from '../../components/ChatSelector';
 
 export default function ChatRoom() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [otherUser, setOtherUser] = useState(null);
+  const [selectedSender, setSelectedSender] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("userToken");
@@ -42,6 +44,7 @@ export default function ChatRoom() {
         const chatroomData = await chatroomResponse.json();
         setOtherUser(chatroomData.other_user);
 
+        setSelectedSender(user.id);
 
         // 채팅 내역 가져오기
         const chatResponse = await fetch(`https://goorm-kakaotalk-api.vercel.app/api/chatrooms/${chatroomId}/chats`, {
@@ -76,7 +79,7 @@ export default function ChatRoom() {
           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-          sender_id: user.id,
+          sender_id: selectedSender,
           content: newMessage
         })
       });
@@ -100,7 +103,7 @@ export default function ChatRoom() {
         {/* 채팅방 헤더 */}
         <div className="chatroom-header">
           <p onClick={() => navigate("/chatlist")}>←</p>
-          <h2>{"Username"}</h2>
+          <h2>{otherUser?.name || user.name}</h2>
         </div>
 
         {/* 채팅방 메세지 목록 */}
@@ -116,6 +119,10 @@ export default function ChatRoom() {
           </div>
         </div>
       </div>
+
+      {/* 메시지 선택자 */}
+      {otherUser && otherUser.id !== user.id && <ChatSelector user={user} otherUser={otherUser} selectedSender={selectedSender} setSelectedSender={setSelectedSender} />}
+
       {/* 메세지 입력창 & 전송 버튼 */}
       <div className="chatroom-input">
           <textarea placeholder="메시지 입력" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={(e) =>{
