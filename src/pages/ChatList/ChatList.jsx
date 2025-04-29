@@ -44,12 +44,12 @@ export default function ChatList() {
               <h3>{user.name}</h3>
               <p>{user.bio || "상태메세지가 없습니다."}</p>
             </div>
-            <button className="chatself-button" onClick={() => navigate("/chatroom/self")}>나와의 채팅</button>
+            <button className="chatself-button" onClick={() => navigate("/chatroom/me")}>나와의 채팅</button>
           </div>
 
           <div className="chatrooms">
             {chatlistItem.map((chatroom, index) => (
-              <div className="profile-container" key={index}>
+              <div className="profile-container" key={index} onClick={() => navigate(`/chatroom/${chatroom.id}`)}>
                 <img className="profile-img" src={chatroom.other_user.profile_image_url} alt="Other User Profile Image" />
                 <div className="profile-content">
                   <h3>{chatroom.other_user.name}</h3>

@@ -1,0 +1,121 @@
+.chatroom-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 30vw;
+  height: 100vh;
+  min-width: 500px;
+  overflow: hidden;
+
+  border-radius: 10px;
+  color: black;
+  background-color: #9bbbd4;
+}
+
+
+/* 채팅방 컨테이너: 헤더+메세지+입력창 */
+.chatroom-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  
+}
+
+
+/* 채팅방 헤더 */
+.chatroom-header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+
+  height: 15vh;
+  width: 100%;
+  padding: 0 20px;
+  gap: 15px;
+}
+
+.chatroom-header > p{
+  color: black;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chatroom-header > h2{
+  color: black;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+/* 채팅방 메세지 */
+.chatroom-content-wrapper{
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  min-height: 60vh;
+  max-height: 60vh;
+
+}
+
+
+/* 채팅창 */
+.chatroom-input{
+  display: flex;
+  align-items: stretch;
+  padding: 10px 5px;
+  height: 25vh;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+  background-color: white;
+}
+
+.chatroom-input > textarea{
+  flex: 1;
+  vertical-align: top;
+  padding: 8px;
+  border: none;
+  resize: none;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  box-shadow: none;
+  color: black;
+  background-color: white;
+}
+
+.chatroom-input > button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 900;
+  color: black;
+  background-color: #f9e000;
+
+  outline: none;
+  box-shadow: none;
+}
+
+.chatroom-input > button:hover{
+  background-color: #f3db08;
+}
