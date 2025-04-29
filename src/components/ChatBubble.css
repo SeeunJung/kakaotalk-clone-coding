@@ -1,10 +1,11 @@
 .chatbubble-wrapper-other {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   margin-bottom: 10px;
 
   box-sizing: border-box;
+  
   width: 100%;
 }
 
@@ -20,8 +21,8 @@
 }
 
 .chatbubble-profile-img{
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 10px;
   margin-right: 10px;
@@ -55,7 +56,5 @@
 .chat-content-other {
   background-color: #ffffff;
   color: black;
-
-  padding: 10px;
   border-radius: 5px;
 }
