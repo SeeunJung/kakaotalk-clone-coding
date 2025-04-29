@@ -7,6 +7,7 @@ export default function ChatRoom() {
   const navigate = useNavigate();
 
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
   const [otherUser, setOtherUser] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -62,6 +63,36 @@ export default function ChatRoom() {
   }, [chatroomId, token]);
 
 
+  // 메시지 전송
+  const handleNewMessage = async() => {
+    if(!newMessage.trim())
+      return;
+
+    try{
+      const response = await fetch(`https://goorm-kakaotalk-api.vercel.app/api/chatrooms/${chatroomId}/chats`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          sender_id: user.id,
+          content: newMessage
+        })
+      });
+      if(!response.ok)
+        throw new Error("메시지 전송 실패");
+
+      const sent = await response.json();
+
+      setMessages((prev) => [...prev, sent]);
+      setNewMessage("");
+    }
+    catch(err){
+      alert(err.message);
+    }
+  };
+
   return (
     <div className="chatroom-wrapper">
       <div className="chatroom-container">
@@ -87,8 +118,13 @@ export default function ChatRoom() {
       </div>
       {/* 메세지 입력창 & 전송 버튼 */}
       <div className="chatroom-input">
-          <textarea placeholder="메시지 입력"></textarea>
-          <button>↑</button>
+          <textarea placeholder="메시지 입력" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={(e) =>{
+            if(e.key === "Enter" && !e.shiftKey){
+              e.preventDefault();
+              handleNewMessage();
+            }
+          }}></textarea>
+          <button onClick={handleNewMessage}>↑</button>
         </div>
     </div>
   )
