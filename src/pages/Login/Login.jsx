@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
 import logo from "../../assets/logo.png"
+import { isValidEmail } from '../../utils/validators';
+import { fetchWithToken, postWithoutToken } from '../../utils/api';
 
 export default function Login() {
 
@@ -11,8 +13,7 @@ export default function Login() {
   const [errorAlert, setErrorAlert] = useState("");
 
   const navigate = useNavigate();
-  const idRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
-  const notAllowed = id==="" || password === "" || !idRegEx.test(id);
+  const notAllowed = id==="" || password === "" || !isValidEmail(id);
 
   const handleId = (e) => {
     setId(e.target.value);
@@ -23,7 +24,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if(id && !idRegEx.test(id))
+    if(id && !isValidEmail(id))
       setErrorAlert("아이디는 이메일 형식으로 입력하셔야 합니다.");
     else
       setErrorAlert("");
@@ -32,24 +33,11 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch("https://goorm-kakaotalk-api.vercel.app/api/signin",
-        {
-          method: "POST",
-          headers:{
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: id,
-            password: password
-          })
-        }
-      );
-
-      const loginData = await response.json();
-      if(!response.ok){
-        throw new Error(loginData.message || alert("로그인에 실패했습니다."));
-      }
-
+      const loginData = await postWithoutToken("https://goorm-kakaotalk-api.vercel.app/api/signin", {
+        email: id,
+        password: password,
+      })
+      
       const jwtToken = loginData.accessToken;
       if(!jwtToken){
         throw new Error("서버로부터 토큰을 받지 못했습니다.");
@@ -57,19 +45,7 @@ export default function Login() {
 
       localStorage.setItem("userToken", jwtToken);
 
-      const userResponse = await fetch(
-        "https://goorm-kakaotalk-api.vercel.app/api/users/me",
-        {
-          headers:{
-            Authorization: `Bearer ${jwtToken}`
-          }
-        }
-      );
-
-      const userData = await userResponse.json();
-      if(!userResponse.ok){
-        throw new Error(userData.message || alert("사용자 정보를 불러오는 데 실패했습니다."));
-      }
+      const userData = await fetchWithToken("https://goorm-kakaotalk-api.vercel.app/api/users/me");
 
       localStorage.setItem("user", JSON.stringify(userData));
 

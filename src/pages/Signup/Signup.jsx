@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import "./Signup.css";
 import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo.png"
+import { isValidEmail, isValidPassword, isValidPhoneNumber } from '../../utils/validators';
+import { postWithoutToken } from '../../utils/api';
 
 export default function Signup() {
 
@@ -20,10 +22,6 @@ export default function Signup() {
     const [confirmedPasswordErrorAlert, setConfirmedPasswordErrorAlert] = useState("");
     const [phoneNumberErrorAlert, setPhoneNumberErrorAlert] = useState("");
 
-  const idRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
-  const passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
-  const phoneNumberRegEx = /^[0-9]*$/;
-
   //useEffect 적용
   //아이디 유효성 검사
   const handleId = (e) => {
@@ -31,7 +29,7 @@ export default function Signup() {
   };
 
     useEffect(() => {
-    if(id && !idRegEx.test(id)){
+    if(id && !isValidEmail(id)){
       setIdErrorAlert("아이디는 이메일 형식으로 입력하셔야 합니다.");
     }
     else{
@@ -45,7 +43,7 @@ export default function Signup() {
   };
 
   useEffect(() => {
-    if(password && !passwordRegEx.test(password)){
+    if(password && !isValidPassword(password)){
       setPasswordErrorAlert("비밀번호를 올바른 형식으로 입력하셔야 합니다.");
     }
     else{
@@ -78,7 +76,7 @@ export default function Signup() {
   };
 
   useEffect(() => {
-    if(!phoneNumberRegEx.test(phoneNumber)){
+    if(!isValidPhoneNumber(phoneNumber)){
       setPhoneNumberErrorAlert("숫자만 입력해주세요.");
     }
     else{
@@ -92,28 +90,15 @@ const notAllowed = id === "" || password === "" || confirmedPassword === "" || n
   const handleSignup = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch("https://goorm-kakaotalk-api.vercel.app/api/signup",
-        {
-          method: "POST",
-          headers:{
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: id,
-            password: password,
-            name,
-            phoneNumber
-          })
-        }
-      );
+      const data = await postWithoutToken("https://goorm-kakaotalk-api.vercel.app/api/signup", {
+        email: id,
+        password,
+        name,
+        phoneNumber,
+      });
 
-      const data = await response.json();
-
-      if(!response.ok){
-        throw new Error(data.message || "회원가입에 실패했습니다.")
-      }
-
-      alert(`${name}님 환영합니다! 로그인 페이지로 돌아갑니다.`);
+      if(data.success)
+        alert(`${name}님 환영합니다! 로그인 페이지로 돌아갑니다.`);
       navigate("/")
     }
     catch(err){
